@@ -23,14 +23,17 @@ from osv import osv, fields
 #from ooop import OOOP  # expecting to load in the console ooop as second option
 from rfoo.utils import rconsole
 
-orm = {}
+_cr = None
+_self = None
+_uid = None
+
 
 class impulzia_console(osv.osv):
     def __init__(self,  cr, uid):
         super( osv.osv, self ).__init__(cr, uid)
-        orm['orm'] = self
-        orm['cr'] = cr
-        orm['uid'] = uid
+        _self = self
+        _cr = cr
+        _uid = uid
         rconsole.spawn_server()
         print '>>>>>>>>>>>>>>>>>>>>>>>>>> Console Loaded <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
         print '>>>>>>>>>>>>>>>>>>>>>>> access with rconsole <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'

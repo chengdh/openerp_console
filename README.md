@@ -22,12 +22,11 @@ This is still beta is the first version so this will change pretty soon.
 
 1. Access to the project.
 2. Launch rconsole
-3. In the console theres a variable orm with this params orm, uid, cr
-   which correspond to self, cr, uid in the normal openerp functions
+3. In the console there's 3 variable (\_self, \_uid, \_cr) which each correspond to self, cr, uid in the normal openerp functions
 
 example of code:
 <pre><code>
-partners = orm['orm'].pool.get('res.partner')
-partner = partners.browse(orm['cr'], orm['uid'], [1,2,3])
+partners = _self.pool.get('res.partner')
+partner = partners.browse(_cr, _uid, [1,2,3])
 </code></pre>
 
