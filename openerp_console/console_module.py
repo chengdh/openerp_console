@@ -22,22 +22,38 @@
 from osv import osv, fields
 #from ooop import OOOP  # expecting to load in the console ooop as second option
 from rfoo.utils import rconsole
+import sql_db
 
-_cr = None
-_self = None
-_uid = None
+orm = {}
+
+def _self():
+    return orm['self']
+
+def _cr():
+    """docstring for _cr"""
+    if orm['cr']._Cursor__closed:
+        db = sql_db.db_connect(orm['cr'].dbname)
+        orm['cr'] = db.cursor()
+    return orm['cr']
+
+def _uid(username='admin'):
+    """docstring for uid"""
+    orm['uid'] = _self().pool.get('res.users').search(_cr(), orm['uid'], [('login', '=', username)])[0]
+    return orm['uid']
+
 
 
 class impulzia_console(osv.osv):
-    def __init__(self,  cr, uid):
-        super( osv.osv, self ).__init__(cr, uid)
-        _self = self
-        _cr = cr
-        _uid = uid
+    def __init__(self, uid, cr):
+        super( osv.osv, self ).__init__(uid, cr)
+        orm['self'] = self
+        orm['cr'] = cr
+        orm['uid'] = uid
         rconsole.spawn_server()
+
         print '>>>>>>>>>>>>>>>>>>>>>>>>>> Console Loaded <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
         print '>>>>>>>>>>>>>>>>>>>>>>> access with rconsole <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
- 
+    
     _name = 'impulzia.console'
     _columns = {}
 impulzia_console()
