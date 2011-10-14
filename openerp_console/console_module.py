@@ -38,7 +38,7 @@ def _cr():
 
 def _uid(username='admin'):
     """docstring for uid"""
-    orm['uid'] = _self().pool.get('res.users').search(_cr(), orm['uid'], [('login', '=', username)])[0]
+    orm['uid'] = _self().pool.get('res.users').search(_cr(), 1, [('login', '=', username)])[0]
     return orm['uid']
 
 
@@ -52,9 +52,11 @@ class impulzia_console(osv.osv):
         rconsole.spawn_server()
 
         print '>>>>>>>>>>>>>>>>>>>>>>>>>> Console Loaded <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-        print '>>>>>>>>>>>>>>>>>>>>>>> access with rconsole <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-    
+        print '>>>>>>>>>>>>>>>> access with openerp-console/rconsole <<<<<<<<<<<<<<<<<<<<<<<'
+
     _name = 'impulzia.console'
     _columns = {}
 impulzia_console()
+
+
 
